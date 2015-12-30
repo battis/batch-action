@@ -1,0 +1,22 @@
+{
+    "name": "battis/batch-action",
+    "description": "A self-running object to run categorized batches of scripts (like, for an install)",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Seth Battis",
+            "email": "seth@battis.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+		"pear/log": "~1.12",
+        "myclabs/php-enum": "^1.4",
+		"roderik/pwgen-php": "~0.1"
+    },
+    "autoload": {
+        "psr-4": {
+	        "Battis\\BatchAction\\": "src"
+        }
+    }
+}

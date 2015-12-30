@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>BatchAction</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">BatchAction</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Battis.html">\Battis</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-241411453"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-241411453" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-146830926"></a>
+                                <a href="../namespaces/Battis.html" style="margin-left: 30px; padding-left: 0">Battis</a>
+            </div>
+            <div id="namespace-146830926" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1370426813"></a>
+                                <a href="../namespaces/Battis.BatchAction.html" style="margin-left: 30px; padding-left: 0">BatchAction</a>
+            </div>
+            <div id="namespace-1370426813" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Battis.BatchAction.Action.html">Action</a></li>
+                                                    <li class="class"><a href="../classes/Battis.BatchAction.Batch.html">Batch</a></li>
+                                                    <li class="class"><a href="../classes/Battis.BatchAction.BatchManager.html">BatchManager</a></li>
+                                                    <li class="class"><a href="../classes/Battis.BatchAction.Exception.html">Exception</a></li>
+                                                    <li class="class"><a href="../classes/Battis.BatchAction.Filter.html">Filter</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Battis.BatchAction.html">\Battis\BatchAction</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Battis\BatchAction</small>BatchManager</h1>
+                    <p><em>A self-running object to run categorized batches of scripts (like, for an
+install)</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_getInstance" class="">getInstance()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_run" class="">run()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_hasRun" class="">hasRun()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_getResult" class="">getResult()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#constant_NO_RESULT" class="">NO_RESULT</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_initializeSequence" class="">initializeSequence()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_initializeLogger" class="">initializeLogger()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_getLogFilePath" class="">getLogFilePath()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_getAppPath" class="">getAppPath()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_getAppUrl" class="">getAppUrl()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_prerequisite" class="">prerequisite()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_DATABASE" class="">DATABASE()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_FILES" class="">FILES()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method_SCRIPT" class="">SCRIPT()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#property_logger" class="">$logger</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method___wakeup" class="">__wakeup()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#method___clone" class="">__clone()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#property_sequence" class="">$sequence</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#property_result" class="">$result</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.BatchManager.html#property_singleton" class="">$singleton</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/BatchManager.html"><div class="path-wrapper">BatchManager.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Battis\BatchAction\BatchManager</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Seth Battis <a href="mailto:seth@battis.net">seth@battis.net</a></p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_NO_RESULT" name="constant_NO_RESULT" class="anchor"></a>
+            <article id="constant_NO_RESULT" class="constant">
+                <h3 class="">NO_RESULT</h3>
+                <pre class="signature">NO_RESULT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_logger" name="property_logger" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$logger</h3>
+                <pre class="signature">$logger : \Log</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \Log
+                &mdash; Log file handle                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_sequence" name="property_sequence" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$sequence</h3>
+                <pre class="signature">$sequence : array&lt;mixed,\Battis\BatchAction\Batch&gt;</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array&lt;mixed,<a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a>&gt;
+                &mdash; action sequence                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_result" name="property_result" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$result</h3>
+                <pre class="signature">$result : array</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                &mdash; Results of action sequence, stored by batch and step. To
+     access, for example, step 1 of the SCRIPT batch:
+     $this-&gt;results[&#039;SCRIPT&#039;][1]                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_singleton" name="property_singleton" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$singleton</h3>
+                <pre class="signature">$singleton : \Battis\BatchAction\BatchManager</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/Battis.BatchAction.BatchManager.html">\Battis\BatchAction\BatchManager</a>
+                &mdash; The singleton instance of BatchManager                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getInstance" name="method_getInstance" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getInstance()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getInstance(array&lt;mixed,\Battis\BatchAction\Batch&gt;  <span class="argument">$sequence = null</span>) </pre>
+                <p><em>Get a singleton instance of BatchManager</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array&lt;mixed,<a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a>&gt;</td>
+                                <td>$sequence </td>
+                                <td><p>(Optional) An array specifying the order of the action
+sequence (default defined in <code>initializeSequence()</code>)</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/Battis.BatchAction.BatchManager.html#method_initializeSequence"><span class="namespace-wrapper"></span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_run" name="method_run" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">run()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">run(boolean  <span class="argument">$force = false</span>, \Battis\BatchAction\Batch|array&lt;mixed,\Battis\BatchAction\Batch&gt;|array  <span class="argument">$filter = null</span>) </pre>
+                <p><em>Run this BatchManager&#039;s action sequence</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$force </td>
+                                <td><p>(Optional) If already run, force a run (default <code>FALSE</code>)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a>|array&lt;mixed,<a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a>&gt;|array</td>
+                                <td>$filter </td>
+                                <td><p>(Optional) Filter batch sequence by batch and also by
+filter. Pass a single Batch to filter for only that Batch.
+Pass an array of Batches to filter for all of those Batches.
+Pass an associative array keyed with Batch(es) addressing
+integer values or arrays of integer values filtering steps.</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Battis\BatchAction\Exception</dt>
+                            <dd><p>INVALID_BATCH if <code>$filter</code> is not (an) instance(s) of
+Batch</p></dd>
+                                                                    </dl>
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>BatchManager::hasRun()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hasRun" name="method_hasRun" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hasRun()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hasRun() : boolean</pre>
+                <p><em>Has this BatchManager already been run?</em></p>
+                <p>By default, a BatchManager will write to a log file and will treat the
+existence of that log file as definitive evidence that a run has
+already taken place. Classes that extend BatchManager are strongly
+encouraged to employ stronger verification techniques (for example
+testing that a database table exists and is properly populated).</p>
+<p>This method is used by <code>BatchManager::run()</code> to determine if a run
+should be started.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p><code>TRUE</code> if a prior run is detected, <code>FALSE</code> otherwise</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>BatchManager::getLogFilePath()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getResult" name="method_getResult" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getResult()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getResult(\Battis\BatchAction\Batch  <span class="argument">$batch = null</span>, integer  <span class="argument">$step = false</span>) : mixed</pre>
+                <p><em>Get the result of the most recent run (if any)</em></p>
+                <p>Be aware that this may return <code>FALSE</code> meaning that there is no recent
+run (or that a filter was unmatched) <em>or</em> that the value stored for a
+particular result is false.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a></td>
+                                <td>$batch </td>
+                                <td><p>(Optional) Filter results by a specific batch</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$step </td>
+                                <td><p>(Optional, requires <code>$batch</code>) Filter results of a batch for
+a specific step</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>The most recent result (or <code>BatchManager::NO_RESULT</code> if
+no action sequence has been run or the batch and/or step filter
+is unmatched)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(array&lt;mixed,\Battis\BatchAction\Batch&gt;  <span class="argument">$sequence = null</span>) </pre>
+                <p><em>Construct an BatchManager</em></p>
+                <p>As a singleton class, constructors are not directly accessible. Use
+<code>BatchManager::getInstance()</code> instead.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array&lt;mixed,<a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a>&gt;</td>
+                                <td>$sequence </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/Battis.BatchAction.BatchManager.html#method_getInstance"><span class="namespace-wrapper">getInstance()</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd>BatchManager::initializeBatches()</dd>
+                                            <dd>BatchManager::initializeLogger()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_initializeSequence" name="method_initializeSequence" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">initializeSequence()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">initializeSequence(array&lt;mixed,\Battis\BatchAction\Batch&gt;  <span class="argument">$sequence = null</span>) </pre>
+                <p><em>Initialize the action sequence to default value</em></p>
+                <p>Arbitrarily, the default sequence is <code>[ Batch::SCRIPT(), Batch::DATABASE(), Batch::FILES(), Batch::SCRIPT() ]</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array&lt;mixed,<a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a>&gt;</td>
+                                <td>$sequence </td>
+                                <td><p>(Optional) User-specified sequence passed to <code>getInstance()</code>
+(will override default)</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_initializeLogger" name="method_initializeLogger" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">initializeLogger()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">initializeLogger() </pre>
+                <p><em>Initialize the logger for the BatchManager</em></p>
+                <p>Called by the constructor, available to override if the default option
+(a log file in the root of the BatchManager directory for each subclass
+of BatchManager instantiated) is undesireable.</p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>BatchManager::getLogFilePath()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getLogFilePath" name="method_getLogFilePath" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getLogFilePath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getLogFilePath() : string</pre>
+                <p><em>Path to the log file for this BatchManager instance</em></p>
+                <p>Log files are stored at the root of the BatchManager directory. One log
+file is generated for each subclass of BatchManager instantiated.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAppPath" name="method_getAppPath" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getAppPath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAppPath() : string</pre>
+                <p><em>Path to the current app</em></p>
+                <p>If installed via <a href="http://getcomposer.org">Composer</a>, returns the parent
+directory of the <code>vendor</code> directory, otherwise returns the parent
+directory of <code>src</code> directory.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAppUrl" name="method_getAppUrl" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getAppUrl()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAppUrl() : string|boolean</pre>
+                <p><em>URL of the current app</em></p>
+                <p>If installed via <a href="http://getcomposer.org">Composer</a>, returns the URL of
+the parent directory of the <code>vendor</code> directory, otherwise returns the
+URL of the parent directory of <code>src</code> directory.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    string|boolean
+                                            &mdash; <p>URL (or <code>FALSE</code> if <code>$_SERVER</code> is unavailable, as
+when run from command line)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                                            <dt>Uses</dt>
+                                                                <dd>BatchManager::getAppPath()</dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_prerequisite" name="method_prerequisite" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">prerequisite()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">prerequisite(\Battis\BatchAction\Batch  <span class="argument">$batch</span>, integer  <span class="argument">$step</span>) : boolean</pre>
+                <p><em>Require a particular step in the sequence to be run as a prerequisite
+for another</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/Battis.BatchAction.Batch.html">\Battis\BatchAction\Batch</a></td>
+                                <td>$batch </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$step </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Battis\BatchAction\Exception</dt>
+                            <dd><p>INVALID_STEP If the step passed is not an integer</p></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>'TRUE' if the prerequiste step has been run already,
+'FALSE' if it was run as a result of this prerequisite</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_DATABASE" name="method_DATABASE" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">DATABASE()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">DATABASE(integer  <span class="argument">$step</span>) </pre>
+                <p><em>Example DATABASE batch step</em></p>
+                <p>Override for custom behavior</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$step </td>
+                                <td><p>Which DATABASE step is this in sequence (if there are more
+than one)?</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_FILES" name="method_FILES" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">FILES()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">FILES(integer  <span class="argument">$step</span>) </pre>
+                <p><em>Example FILES batch step</em></p>
+                <p>Override for custom behavior</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$step </td>
+                                <td><p>Which FILES step is this in sequence (if there are more than
+one)?</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_SCRIPT" name="method_SCRIPT" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">SCRIPT()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">SCRIPT(integer  <span class="argument">$step</span>) </pre>
+                <p><em>Example SCRIPT batch step</em></p>
+                <p>Override for custom behavior</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$step </td>
+                                <td><p>Which SCRIPT step is this in sequence (if there are more
+than one)?</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___wakeup" name="method___wakeup" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">__wakeup()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__wakeup() </pre>
+                <p><em>As a singleton class, constructors are not directly accessible.</em></p>
+                <p>Use <code>BatchManager::getInstance()</code> instead.</p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/Battis.BatchAction.BatchManager.html#method_getInstance"><span class="namespace-wrapper">getInstance()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___clone" name="method___clone" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">__clone()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__clone() </pre>
+                <p><em>As a singleton class, constructors are not directly accessible.</em></p>
+                <p>Use <code>BatchManager::getInstance()</code> instead.</p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="../classes/Battis.BatchAction.BatchManager.html#method_getInstance"><span class="namespace-wrapper">getInstance()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">BatchManager.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/BatchManager.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Battis.html">\Battis</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on 
+Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in phar:///Users/sethbattis/Dropbox/Library/Scripts/phpdocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 89
+December 27th, 2015 at 07:13.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
