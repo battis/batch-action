@@ -2,3 +2,5 @@
 /phpdoc/
 *.log
 .ht*
+.settings
+.buildpath
