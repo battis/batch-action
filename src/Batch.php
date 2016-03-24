@@ -3,15 +3,13 @@
 /** Step class */
 namespace Battis\BatchAction;
 
-use MyCLabs\Enum\Enum;
-
 /**
  * An enumerated class to describe install steps
  *
  * @author Seth Battis <seth@battis.net>
  *        
  */
-class Batch extends Enum {
+class Batch extends \MyCLabs\Enum\Enum {
 
 	const DATABASE = 'Database';
 
