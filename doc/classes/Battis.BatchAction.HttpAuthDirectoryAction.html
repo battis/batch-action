@@ -144,28 +144,28 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1019518973"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2043317609"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1019518973" class="accordion-body collapse in">
+            <div id="namespace-2043317609" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-378305611"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2142753027"></a>
                                 <a href="../namespaces/Battis.html" style="margin-left: 30px; padding-left: 0">Battis</a>
             </div>
-            <div id="namespace-378305611" class="accordion-body collapse ">
+            <div id="namespace-2142753027" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1925126270"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1997368519"></a>
                                 <a href="../namespaces/Battis.BatchAction.html" style="margin-left: 30px; padding-left: 0">BatchAction</a>
             </div>
-            <div id="namespace-1925126270" class="accordion-body collapse ">
+            <div id="namespace-1997368519" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -216,8 +216,9 @@
                                             </nav>
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
-                    <h1><small>\Battis\BatchAction</small>Action</h1>
-                    <p><em>An action that can be run by the BatchManager, generating a Result</em></p>
+                    <h1><small>\Battis\BatchAction</small>HttpAuthDirectoryAction</h1>
+                    <p><em>An action that generates an .htacess file to use HTTP Auth to protect a
+specific directory</em></p>
                     
                     
                                         
@@ -236,7 +237,7 @@
                         </section>
                         <section class="row-fluid public">
                             <section class="span4">
-                                                                    <a href="../classes/Battis.BatchAction.Action.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.HttpAuthDirectoryAction.html#method___construct" class="">__construct()</a><br />
                                                                     <a href="../classes/Battis.BatchAction.Action.html#method_addPrerequisite" class="">addPrerequisite()</a><br />
                                                                     <a href="../classes/Battis.BatchAction.Action.html#method_removePrerequisite" class="">removePrerequisite()</a><br />
                                                                     <a href="../classes/Battis.BatchAction.Action.html#method_addTag" class="">addTag()</a><br />
@@ -249,7 +250,7 @@
                                                                     <a href="../classes/Battis.BatchAction.Action.html#method_hasActed" class="">hasActed()</a><br />
                                                                     <a href="../classes/Battis.BatchAction.Action.html#method_testSandbox" class="">testSandbox()</a><br />
                                                                     <a href="../classes/Battis.BatchAction.Action.html#method_run" class="">run()</a><br />
-                                                                    <a href="../classes/Battis.BatchAction.Action.html#method_act" class="">act()</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.HttpAuthDirectoryAction.html#method_act" class="">act()</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <em>No public properties found</em>
@@ -280,6 +281,9 @@
                                                                     <a href="../classes/Battis.BatchAction.Action.html#property_acting" class="">$acting</a><br />
                                                                     <a href="../classes/Battis.BatchAction.Action.html#property_acted" class="">$acted</a><br />
                                                                     <a href="../classes/Battis.BatchAction.Action.html#property_history" class="">$history</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.HttpAuthDirectoryAction.html#property_dirPath" class="">$dirPath</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.HttpAuthDirectoryAction.html#property_users" class="">$users</a><br />
+                                                                    <a href="../classes/Battis.BatchAction.HttpAuthDirectoryAction.html#property_htpasswdFilePath" class="">$htpasswdFilePath</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -288,17 +292,18 @@
                     </section>
                 </div>
                 <aside class="span4 detailsbar">
-                                            <span class="label label-info">abstract</span>
                                         
                     
                     <dl>
                         <dt>File</dt>
-                            <dd><a href="../files/Action.html"><div class="path-wrapper">Action.php</div></a></dd>
+                            <dd><a href="../files/HttpAuthDirectoryAction.html"><div class="path-wrapper">HttpAuthDirectoryAction.php</div></a></dd>
                                                 <dt>Package</dt>
                             <dd><div class="namespace-wrapper">Default</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
-                                                                                                                                                                    <div class="namespace-wrapper">\Battis\BatchAction\Action</div>
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/Battis.BatchAction.Action.html">\Battis\BatchAction\Action</a></div>
+                                                                                                    <div class="namespace-wrapper">\Battis\BatchAction\HttpAuthDirectoryAction</div>
                             </dd>
 
                         
@@ -346,6 +351,8 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -370,6 +377,8 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -395,6 +404,8 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -419,6 +430,8 @@
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                         <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -439,6 +452,80 @@
                                 <h4>Type</h4>
                 array&lt;mixed,string&gt;
                 &mdash; List of runs in which this action was executed                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_dirPath" name="property_dirPath" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$dirPath</h3>
+                <pre class="signature">$dirPath : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; The path to the directory to be secured                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_users" name="property_users" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$users</h3>
+                <pre class="signature">$users : array&lt;mixed,string&gt;</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array&lt;mixed,string&gt;
+                &mdash; Array of passwords with usernames as keys                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_htpasswdFilePath" name="property_htpasswdFilePath" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$htpasswdFilePath</h3>
+                <pre class="signature">$htpasswdFilePath : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; The path to the `.htpasswd` file                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -464,20 +551,40 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(\Battis\BatchAction\Action|array&lt;mixed,\Battis\BatchAction\Action&gt;  <span class="argument">$prerequisites = array()</span>, string|array&lt;mixed,string&gt;  <span class="argument">$tags = array()</span>) </pre>
+                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$dirPath</span>, string|array&lt;mixed,string&gt;  <span class="argument">$users = &#039;admin&#039;</span>, string  <span class="argument">$htpasswdFilePath = null</span>, array  <span class="argument">$prerequisites = array()</span>, array  <span class="argument">$tags = array()</span>) </pre>
                 <p><em>Construct a new Action</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td><a href="../classes/Battis.BatchAction.Action.html">\Battis\BatchAction\Action</a>|array&lt;mixed,<a href="../classes/Battis.BatchAction.Action.html">\Battis\BatchAction\Action</a>&gt;</td>
+                                <td>string</td>
+                                <td>$dirPath </td>
+                                <td><p>Path to the directory to be secured</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string|array&lt;mixed,string&gt;</td>
+                                <td>$users </td>
+                                <td><p>Username to use. Can also be an array of
+usernames, or mixed array of usernames and username =&gt; password pairs.
+(default: 'admin')</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$htpasswdFilePath </td>
+                                <td><p>Path to <code>.htpasswd</code> file. If the file
+exists, users will be appended, otherwise the file will be created. If no
+path is specified, the .htpasswd file will be created in the secured
+directory. (default: <code>null</code>)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
                                 <td>$prerequisites </td>
                                 <td><p>A prerequisite Action or Actions that
 must be run before this Action can act (default: empty list)</p></td>
                             </tr>
                                                     <tr>
-                                <td>string|array&lt;mixed,string&gt;</td>
+                                <td>array</td>
                                 <td>$tags </td>
                                 <td><p>A tag or tags used for filtering purposes. All
 non-string tag values will be treated as strings (default: empty list)</p></td>
@@ -529,7 +636,9 @@ prerequisites will be ignored)</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -567,7 +676,9 @@ removed, <code>false</code> otherwise</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -605,7 +716,9 @@ ignored)</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -643,7 +756,9 @@ ignored)</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -672,7 +787,9 @@ ignored)</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -701,7 +818,9 @@ ignored)</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -730,7 +849,9 @@ ignored)</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -759,7 +880,9 @@ ignored)</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -788,7 +911,9 @@ execute</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -825,7 +950,9 @@ specific run?</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -864,7 +991,9 @@ variables between actions</p></td>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -913,7 +1042,9 @@ not be run again). (default: <code>false</code>)</p></td>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -928,8 +1059,8 @@ not be run again). (default: <code>false</code>)</p></td>
                 <h3 class="public ">act()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">act(array  <span class="argument">$environment</span>) : \Battis\BatchAction\Result</pre>
-                <p><em>What this Action does</em></p>
-                <p>Overrideable method for extensions of Action to implement</p>
+                <p><em>Secure a directory with HTTP Auth</em></p>
+                <p>Edit or create an <code>.htpasswd</code> and <code>.htaccess</code> file.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
@@ -949,8 +1080,7 @@ variables between actions</p></td>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
-                                        <span class="label label-info">abstract</span>
-                                                <dl>
+                                                            <dl>
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -994,7 +1124,9 @@ otherwise</p>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1041,7 +1173,9 @@ not be run again). (default: <code>false</code>)</p></td>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Battis.BatchAction.Action.html"><div class="path-wrapper">\Battis\BatchAction\Action</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1055,10 +1189,10 @@ not be run again). (default: <code>false</code>)</p></td>
     <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label">Action.php</h3>
+            <h3 id="source-view-label">HttpAuthDirectoryAction.php</h3>
         </div>
         <div class="modal-body">
-            <pre data-src="../files/Action.php.txt" class="language-php line-numbers"></pre>
+            <pre data-src="../files/HttpAuthDirectoryAction.php.txt" class="language-php line-numbers"></pre>
         </div>
     </div>
 

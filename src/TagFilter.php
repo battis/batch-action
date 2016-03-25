@@ -1,0 +1,47 @@
+<?php
+	
+namespace Battis\BatchAction;
+
+/**
+ * Basic filtering of actions by tags
+ * 
+ * @author Seth Battis <seth@battis.net>
+ */
+class TagFilter implements Filter {
+	
+	/** @var string[] List of tags to accept */
+	private $tags = array();
+	
+	/**
+	 * Construct the filter
+	 * 
+	 * @param string|string[] $tags A tag or list of tags (non-string values will
+	 *		be treated as strings)
+	 */
+	public function __construct($tags) {
+		if (is_array($tags)) {
+			foreach($tags as $tag) {
+				$this->tags[] = (string) $tag;
+			}
+		} else {
+			$this->tags[] = (string) $tags;
+		}
+	}
+	
+	/**
+	 * Filter an action by tags
+	 *
+	 * {@inheritDoc}
+	 * 
+	 * @param Action $action {@inheritDoc}
+	 *
+	 * @return boolean {@inheritDoc}
+	 */
+	public function filter(Action $action) {
+		if ($action instanceof Action) {
+			return $action->hasTags($this->tags);
+		} else {
+			return false;
+		}
+	}
+}

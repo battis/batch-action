@@ -1,4 +1,4 @@
 /phpdoc.dist.xml export-ignore
 /doc/ export-ignore
 /tests/ export-ignore
-/example/ export-ignore
+/examples/ export-ignore

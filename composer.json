@@ -11,7 +11,6 @@
     "minimum-stability": "dev",
     "require": {
 		"pear/log": "~1.12",
-        "myclabs/php-enum": "^1.4",
 		"roderik/pwgen-php": "~0.1"
     },
     "autoload": {
