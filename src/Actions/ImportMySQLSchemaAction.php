@@ -1,9 +1,14 @@
 <?php
 	
-namespace Battis\BatchAction;
+namespace Battis\BatchAction\Actions;
 
+use Battis\BatchAction\Action;
+use Battis\BatchAction\Action_Exception;
+use Battis\BatchAction\Result;
+use Battis\BatchAction\SandboxReplaceableData;
 use DOMDocument;
 use DOMXPath;
+use mysqli;
 
 /**
  * Import a MySQL schema (or schemas) into a MySQL database (or databases)
@@ -69,15 +74,15 @@ class ImportMySQLSchemaAction extends Action {
 	 *		instance of `SandboxReplaceableData`, then `$xpath` must be a valid XPath
 	 *		string to list all MySQL configurations in the configuration (default:
 	 *		`null`)
-	 * @param array $prerequisites {@inheritDoc}
-	 * @param array $tags {@inheritDoc}
+	 * @param Action|Action[] $prerequisites {@inheritDoc}
+	 * @param string|string[] $tags {@inheritDoc}
 	 */
-	public function __construct(string $schema = null, $mysqli, string $xpath = null, $prerequisites = array(), $tags = array()) {
+	public function __construct($schema = null, $mysqli, $xpath = null, $prerequisites = array(), $tags = array()) {
 		
 		parent::__construct($prerequisites, $tags);
 		
 		if (is_string($schema)) {
-			$this->$schema = $schema;
+			$this->schema = $schema;
 		} elseif (empty($schema) && !($mysqli instanceof SandboxReplaceableData)) {
 			throw new Action_Exception(
 				'Empty schema value requires that MySQL be configured through sanxbox',
@@ -89,8 +94,8 @@ class ImportMySQLSchemaAction extends Action {
 				Action_Exception::PARAMETER_MISMATCH
 			);
 		}
-		
-		if ($mysqli instanceof \mysqli || ($mysqli instanceof SandboxReplaceableData && $mysqli->getType() === 'mysqli')) {
+
+		if ($mysqli instanceof \mysqli || ($mysqli instanceof SandboxReplaceableData && $mysqli->getClass() === 'mysqli')) {
 			$this->sql = $mysqli;
 			if ($mysqli instanceof SandboxReplaceableData && !empty($xpath)) {
 				$this->xpath = $xpath;
@@ -127,13 +132,20 @@ class ImportMySQLSchemaAction extends Action {
 			$xpath = new DOMXPath($sql->getData());
 			foreach ($xpath->query($this->xpath) as $node) {
 				$sql = new mysqli(
-					$xpath->query("/{self::HOST}", $node)->item(0)->textContent,
-					$xpath->query("/{self::USER}", $node)->item(0)->textContent,
-					$xpath->query("/{self::PASSWORD}", $node)->item(0)->textContent,
-					$xpath->query("/{self::DATABASE}", $node)->item(0)->textContent
+					$xpath->query(self::HOST, $node)->item(0)->textContent,
+					$xpath->query(self::USER, $node)->item(0)->textContent,
+					$xpath->query(self::PASSWORD, $node)->item(0)->textContent,
+					$xpath->query(self::DATABASE, $node)->item(0)->textContent
 				);
+				// TODO When it's safe to disregard PHP <5.3, this should become object-oriented -- http://php.net/manual/en/mysqli.construct.php#example-1881
+				if (mysqli_connect_error()) {
+					throw new Action_Exception(
+						'MySQL connection error ' . mysqli_connect_errno() . ': ' . mysqli_connect_error(),
+						Action_Exception::ACTION_FAILED 
+					);
+				}
 				if (empty($this->schema)) {
-					$schema = $xpath("/{self::SCHEMA}", $node)->item(0)->textContent;
+					$schema = $xpath(self::SCHEMA, $node)->item(0)->textContent;
 				}
 				$messages[] = static::loadSchema($sql, $schema);
 			}
@@ -157,7 +169,7 @@ class ImportMySQLSchemaAction extends Action {
 	 *
 	 * @return string A human-readable message describing the schema loading
 	 */
-	private static function loadSchema(\mysqli $sql, string $schemaStringOrFilePath) {
+	private static function loadSchema(\mysqli $sql, $schemaStringOrFilePath) {
 		/* load schema into a string for processing */
 		$schema = $schemaStringOrFilePath;
 		if (realpath($schemaStringOrFilePath)) {
@@ -194,11 +206,11 @@ class ImportMySQLSchemaAction extends Action {
 			$xpath = new DOMXPath($sql->getData());
 			foreach($xpath->query($this->xpath) as $node) {
 				if (
-					$xpath->query("/{self::HOST}", $node)->length == 0 ||
-					$xpath->query("/{self::USER}", $node)->length == 0 ||
-					$xpath->query("/{self::PASSWORD}", $node)->length == 0 ||
-					$xpath->query("/{self::DATABASE}", $node)->length == 0 ||
-					(empty($this->schema) && $xpath->query("/{self::SCHEMA}", $node)->length == 0)
+					$xpath->query(self::HOST, $node)->length == 0 ||
+					$xpath->query(self::USER, $node)->length == 0 ||
+					$xpath->query(self::PASSWORD, $node)->length == 0 ||
+					$xpath->query(self::DATABASE, $node)->length == 0 ||
+					(empty($this->schema) && $xpath->query(self::SCHEMA, $node)->length == 0)
 				) {
 					return false;
 				}

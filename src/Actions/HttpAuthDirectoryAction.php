@@ -1,7 +1,10 @@
 <?php
 	
-namespace Battis\BatchAction;
+namespace Battis\BatchAction\Actions;
 
+use Battis\BatchAction\Action;
+use Battis\BatchAction\Action_Exception;
+use Battis\BatchAction\Result;
 use PWGen;
 
 /**
@@ -40,9 +43,9 @@ class HttpAuthDirectoryAction extends Action {
 	 * @param array $prerequisites {@inheritDoc}
 	 * @param array $tags {@inheritDoc}
 	 */
-	public function __construct(string $dirPath, $users = 'admin', string $htpasswdFilePath = null, $prerequisites = array(), $tags = array()) {
+	public function __construct($dirPath, $users = 'admin', $htpasswdFilePath = null, $prerequisites = array(), $tags = array()) {
 		parent::__construct($prerequisites, $tags);
-		$this->dirPath = $dirPath;
+		$this->dirPath = (string) $dirPath;
 		$this->users = $users;
 		$this->htPasswdFilePath = $htpasswdFilePath;
 	}
@@ -145,14 +148,22 @@ class HttpAuthDirectoryAction extends Action {
 				}
 				
 				if (!realpath($htaccessFilePath)) {
-					throw new Exception(__METHOD__ . ": .htaccess file not found at `$htaccessFilePath`", Exception::INVALID_PATH);
+					throw new Action_Exception(
+						__METHOD__ . ": .htaccess file not found at `$htaccessFilePath`",
+						Action_Exception::FILE_NOT_FOUND
+					);
 				}
 			} else {
-				throw new Exception(__METHOD__ . ": .htpasswd file not found at `$htpasswdFilePath`", Exception::INVALID_PATH);
+				throw new Action_Exception(
+					__METHOD__ . ": .htpasswd file not found at `$htpasswdFilePath`",
+					Action_Exception::FILE_NOT_FOUND
+				);
 			}
 		} else {
 			throw new Action_Exception(
-				__METHOD__ . ": Directory `{$this->dirPath}` does not exist", Exception::INVALID_PATH);
+				__METHOD__ . ": Directory `{$this->dirPath}` does not exist",
+				Action_Exception::FILE_NOT_FOUND
+			);
 		}
 		
 		return new Result(

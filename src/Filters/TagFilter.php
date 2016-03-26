@@ -1,6 +1,9 @@
 <?php
 	
-namespace Battis\BatchAction;
+namespace Battis\BatchAction\Filters;
+
+use Battis\BatchAction\Action;
+use Battis\BatchAction\Filter;
 
 /**
  * Basic filtering of actions by tags

@@ -1,7 +1,10 @@
 <?php
 	
-namespace Battis\BatchAction;
+namespace Battis\BatchAction\Actions;
 
+use Battis\BatchAction\Action;
+use Battis\BatchAction\Action_Exception;
+use Battis\BatchAction\Result;
 use DOMDocument;
 
 /**
@@ -29,7 +32,7 @@ class ImportConfigXMLAction extends Action {
 	 * @param array $tags (default: array())
 	 * @return void
 	 */
-	public function __construct(string $xmlStringOrFilePath, $prerequisites = array(), $tags = array()) {
+	public function __construct($xmlStringOrFilePath, $prerequisites = array(), $tags = array()) {
 		parent::__construct($prerequisites, $tags);
 		$this->xmlStringOrFilePath = $xmlStringOrFilePath;
 	}
@@ -50,6 +53,8 @@ class ImportConfigXMLAction extends Action {
 		if (realpath($this->xmlStringOrFilePath)) {
 			$xml = file_get_contents($this->xmlStringOrFilePath);
 		}
+		
+		// FIXME make sure we've got some content in $xml!
 		
 		$dom = DOMDocument::loadXML($xml);
 		if (realpath($this->xmlStringOrFilePath)) {

@@ -14,4 +14,5 @@ class Action_Exception extends \Exception {
 	const FAILED_PREREQUISITE = 3;
 	const SANDBOX_ERROR = 4;
 	const PARAMETER_MISMATCH = 5;
+	const FILE_NOT_FOUND = 6;
 }

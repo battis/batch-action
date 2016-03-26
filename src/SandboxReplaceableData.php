@@ -13,7 +13,7 @@ class SandboxReplaceableData {
 	const PATH_DELIMITER = '/';
 	
 	/** @var string Expected type of `$data` */
-	private $type;
+	private $class;
 	
 	/** @var mixed Data that can be replaced from the sandbox */
 	private $data = null;
@@ -27,17 +27,18 @@ class SandboxReplaceableData {
 	/**
 	 * Construct the container
 	 * 
-	 * @param string $type The type of data expected
+	 * @param string $class The type of data expected
 	 * @param mixed $dataOrSandboxPath Either the data itself (matching the `$type`
 	 *		specified, for example if `$type == 'mysqli'` then `$data` must be an
 	 *		instance of `mysqli`), or a path from the root of the sandbox environment
 	 *		to the data desired (e.g. `'/config/mysql'`)
 	 */
-	public function __construct(string $type, $dataOrSandboxPath) {
-		if ($dataOrSandboxPath instanceof $type) {
+	public function __construct($class, $dataOrSandboxPath) {
+		$this->class = (string) $class;
+		if ($dataOrSandboxPath instanceof $class) {
 			$this->data = $dataOrSandboxPath;
 		} elseif (is_string($dataOrSandboxPath)) {
-			$path = explode(self::PATH_DELIMITER, preg_replace('%/(.*)%', '$1', $dataOrSandboxPath));
+			$this->path = explode(self::PATH_DELIMITER, preg_replace('%/(.*)%', '$1', $dataOrSandboxPath));
 		} else {
 			throw new Sandbox_Exception(
 				"Expected either an instance of `$type` or a path in the sandbox, received `" . get_class($dataOrSandboxPath) . '` instead.',
@@ -62,8 +63,8 @@ class SandboxReplaceableData {
 	 * 
 	 * @return string
 	 */
-	public function getType() {
-		return $this->type;
+	public function getClass() {
+		return $this->class;
 	}
 	
 	/**

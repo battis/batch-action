@@ -40,9 +40,9 @@ class Sandbox {
 	 * @param boolean $force Whether or not this was a forced run
 	 * @param mixed[] $environment The sandbox of variables used by those actions
 	 */
-	public function __construct(string $id, array $actions, Filter $filter, $force = false, array &$environment) {
+	public function __construct($id, array $actions, Filter $filter = null, $force = false, array &$environment) {
 		$this->id = $id;
-		$this->timestamp = new DateTime();
+		$this->timestamp = new \DateTime();
 		foreach($actions as $action) {
 			$this->actions[] = $action;
 		}

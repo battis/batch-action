@@ -48,7 +48,7 @@ abstract class Action {
 				}
 			}
 		} elseif ($prerequisites instanceof Action) {
-			$$this->prerequisites[] = $prerequisites;
+			$this->prerequisites[] = $prerequisites;
 		}
 		
 		/* save tags as strings */
@@ -240,7 +240,7 @@ abstract class Action {
 	 *
 	 * @return void
 	 */
-	private function testPrerequisites(array &$environment, string $id, $force = false) {
+	private function testPrerequisites(array &$environment, $id, $force = false) {
 		foreach($this->prerequisites as $prerequisites) {
 			$prerequisites->run($environment, $id, $force);
 		}
@@ -274,14 +274,17 @@ abstract class Action {
 	 *
 	 * @return Result
 	 */
-	public function run(array &$environment, string $id, $force = false) {
+	public function run(array &$environment, $id, $force = false) {
 		if ((!$force && $this->hasActed()) || ($force && $this->hasActed($id))) {
-			return true;
+			return new Result(
+				get_class($this) . ' already run',
+				'This action has already run and was not run again.'
+			);
 		} else {
 			if (!$this->isActing()) {
 				$this->acting = true;
 				$result = new Result(
-					__CLASS__ . ' incomplete',
+					get_class($this) . ' incomplete',
 					'This action has not run to completion.',
 					Result::DANGER
 				);
@@ -289,13 +292,13 @@ abstract class Action {
 					$this->testPrerequisites($environment, $id, $force);
 					if (!$this->testSandbox($environment)) {
 						throw new Action_Exception(
-							__CLASS__ . 'requires a prerequisite configuration of the sandbox execution environment that failed',
+							get_class($this) . 'requires a prerequisite configuration of the sandbox execution environment that failed',
 							Action_Exception::FAILED_PREREQUISITE
 						);
 					}
 				} catch (Action_Exception $e) {
 					throw new Action_Exception(
-						__CLASS__ . ' requires a prerequisite that failed: ' . $e->getMessage() . ' [Error ' . $e->getCode() . ']',
+						get_class($this) . ' requires a prerequisite that failed: ' . $e->getMessage() . ' (Action_Exception ' . $e->getCode() . ')',
 						Action_Exception::FAILED_PREREQUISITE
 					);
 				}
@@ -304,21 +307,20 @@ abstract class Action {
 					$this->acting = false;
 					$this->acted = true;
 					$this->history[] = $id;
-					return true;
 				} else {
 					throw new Action_Exception(
-						__CLASS__ . ' failed to act',
+						get_class($this) . ' failed to act',
 						Action_Exception::ACTION_FAILED
 					);
 				}
 			} else {
 				throw new Action_Exception(
-					__CLASS__ . ' created a circular prerequisite dependency',
+					get_class($this) . ' created a circular prerequisite dependency',
 					Action_Exception::CIRCULAR_DEPENDENCY
 				);
 			}
+			return $result;
 		}
-		return $result;
 	}
 	
 	/**

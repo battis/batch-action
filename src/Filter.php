@@ -16,5 +16,5 @@ interface Filter {
 	 * @param Action $action
 	 * @return boolean `true` if the Action meets our criteria, `false` otherwise
 	 */
-	public function filter($action);
+	public function filter(Action $action);
 }
