@@ -1,6 +1,6 @@
 <?php
 	
-namespace Battis\BatchAction;
+namespace Battis\BatchAction\Sandbox;
 
 /**
  * All exceptions thrown by Sandbox

@@ -1,0 +1,75 @@
+<?php
+	
+namespace Battis\BatchAction\Sandbox;
+
+use Battis\BatchAction\Sandbox_Exception;
+
+/**
+ * A container for data that might be replaced by data stored in the
+ * BatchManager execution environment sandbox.
+ *
+ * @author Seth Battis <seth@battis.net>
+ */
+class SandboxReplaceableData {
+	
+	const PATH_DELIMITER = '/';
+	
+	/** @var mixed Data that can be replaced from the sandbox */
+	private $data = null;
+	
+	/** @var array The path to the data in the sandbox */
+	private $path = array();
+	
+	/**
+	 * Construct the container
+	 * 
+	 * @param mixed $path A path to the data within the BatchManager execution
+	 *		environment sandbox (e.g. '/config/secrets.xml')
+	 * @param mixed $data Optional placeholder data, if the Sandbox data cannot be
+	 *		found (default: null)
+	 */
+	public function __construct($path, $data = null) {
+
+		if (!empty((string) $path)) {
+			$this->path = explode(self::PATH_DELIMITER, preg_replace('%/(.*)%', '$1', (string) $path));
+		} else {
+			throw new Sandbox_Exception(
+				'Expected either a non-empty path string to data in the sandbox, received' . (is_string($path) ? ' empty string' : ' `' . get_class($path) . '`') . ' instead.',
+				Sandbox_Exception::PARAMETER_MISMATCH
+			);
+		}
+
+		$this->data = $data;		
+	}
+	
+	/**
+	 * Get the data
+	 *
+	 * If the sandbox contains the desired data, that will be returned. However if
+	 * there is no valid sandbox reference or there is no data in the sandbox, the
+	 * literal data (if provided) will be returned as a back up.
+	 * 
+	 * @param array $environment The BatchManager execution environment of shared
+	 *		variables between actions
+	 *
+	 * @return mixed `null` if no data is present
+	 */
+	public function getData(array &$environment = null) {
+		if (!empty($environment)) {
+			$loc =& $environment;
+			$found = true;
+			foreach ($this->path as $key) {
+				if (isset($loc[$key])) {
+					$loc =& $loc[$key];
+				} else {
+					$found = false;
+				}
+			}
+			if ($found) {
+				return $loc;
+			}
+		}
+		
+		return $this->data;
+	}
+}

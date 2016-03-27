@@ -15,9 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-	        "Battis\\BatchAction\\": "src/",
-	        "Battis\\BatchAction\\Actions\\": "src/Actions/",
-	        "Battis\\BatchAction\\Filters\\": "src/Filters/"
+	        "Battis\\BatchAction\\": "src/"
         }
     }
 }

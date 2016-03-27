@@ -4,53 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "93fa7bfb5b3b6f7b8f0628ddaf2f0e13",
-    "content-hash": "c08418fbf5fee9c70c95dcf4ccbd3c17",
+    "hash": "1ccdad3d68b479bd5df9721ed8fee93e",
+    "content-hash": "01899f5afddb5ce40f44ea3b7c865b86",
     "packages": [
-        {
-            "name": "myclabs/php-enum",
-            "version": "1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/myclabs/php-enum.git",
-                "reference": "07da9d1a7469941ae05b046193fac4c83bdb0d7e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/07da9d1a7469941ae05b046193fac4c83bdb0d7e",
-                "reference": "07da9d1a7469941ae05b046193fac4c83bdb0d7e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MyCLabs\\Enum\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP Enum contributors",
-                    "homepage": "https://github.com/myclabs/php-enum/graphs/contributors"
-                }
-            ],
-            "description": "PHP Enum implementation",
-            "homepage": "http://github.com/myclabs/php-enum",
-            "keywords": [
-                "enum"
-            ],
-            "time": "2015-07-22 16:14:03"
-        },
         {
             "name": "pear/log",
             "version": "1.12.9",
@@ -161,16 +117,16 @@
         },
         {
             "name": "roderik/pwgen-php",
-            "version": "0.1.4",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roderik/pwgen-php.git",
-                "reference": "f17e1edbf9e1364ff1094f479173fd48e8eced13"
+                "reference": "80f70098a8a516ef4ae633fc1664fa2dcb42b392"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roderik/pwgen-php/zipball/f17e1edbf9e1364ff1094f479173fd48e8eced13",
-                "reference": "f17e1edbf9e1364ff1094f479173fd48e8eced13",
+                "url": "https://api.github.com/repos/roderik/pwgen-php/zipball/80f70098a8a516ef4ae633fc1664fa2dcb42b392",
+                "reference": "80f70098a8a516ef4ae633fc1664fa2dcb42b392",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +157,7 @@
                 "generator",
                 "password"
             ],
-            "time": "2015-06-06 09:21:47"
+            "time": "2016-02-27 21:46:56"
         }
     ],
     "packages-dev": [],

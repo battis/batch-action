@@ -5,9 +5,7 @@ namespace Battis\BatchAction\Actions;
 use Battis\BatchAction\Action;
 use Battis\BatchAction\Action_Exception;
 use Battis\BatchAction\Result;
-use Battis\BatchAction\SandboxReplaceableData;
-use DOMDocument;
-use DOMXPath;
+use Battis\BatchAction\Sandbox\SandboxReplaceableData;
 use mysqli;
 
 /**
@@ -32,12 +30,6 @@ class ImportMySQLSchemaAction extends Action {
 	private $sql;
 	
 	/**
-	 * @var \DOMXPath Location of the MySQL configuration information in imported
-	 *		XML configuration (if present)
-	 */
-	private $xpath;
-
-	/**
 	 * Construct an Action
 	 * 
 	 * If any schema or MySQL connection data must be loaded from the sandbox, make
@@ -61,56 +53,74 @@ class ImportMySQLSchemaAction extends Action {
 	 * literal schema string or a path to a schema file has been provided by the
 	 * `$schema` parameter, then the `<schema>` tag will be ignored.
 	 *
-	 * @param string $schema Either a literal MySQL schema query, the path to a
-	 *		file containing a MySQL schema query, or `null`. If `null`, then `$mysqli`
-	 *		_must_ be an instance of `SandboxReplaceableData` and there must be a
-	 *		literal schema string or a path to a schema file stored in the
-	 *		`ImportMySQLSchemaAction::SCHEMA` key for each MySQL configuration
-	 *		(default: `null`)
 	 * @param \mysqli|SandboxReplaceableData $mysqli Either a `mysqli` connection
 	 *		instance or a `SandboxReplaceableData` reference to a pre-loaded
 	 *		configuration.
-	 * @param string $xpath If either `$schema` is `null` or `$mysqli` is an
-	 *		instance of `SandboxReplaceableData`, then `$xpath` must be a valid XPath
-	 *		string to list all MySQL configurations in the configuration (default:
-	 *		`null`)
+	 * @param string $schema Either a literal MySQL schema query, the path to a
+	 *		file containing a MySQL schema query, or `null`. If `null`, then `$mysqli`
+	 *		_must_ be an instance of `SandboxReplaceableData` and there _must_ be a
+	 *		literal schema string or a path to a schema file stored in the
+	 *		`ImportMySQLSchemaAction::SCHEMA` key for each MySQL configuration
+	 *		(default: `null`)
 	 * @param Action|Action[] $prerequisites {@inheritDoc}
 	 * @param string|string[] $tags {@inheritDoc}
 	 */
-	public function __construct($schema = null, $mysqli, $xpath = null, $prerequisites = array(), $tags = array()) {
+	public function __construct($mysqli, $schema = null, $prerequisites = array(), $tags = array()) {
 		
 		parent::__construct($prerequisites, $tags);
 		
-		if (is_string($schema)) {
-			$this->schema = $schema;
-		} elseif (empty($schema) && !($mysqli instanceof SandboxReplaceableData)) {
-			throw new Action_Exception(
-				'Empty schema value requires that MySQL be configured through sanxbox',
-				Action_Exception::PARAMETER_MISMATCH
-			);
+		if ($mysqli instanceof mysqli || is_a($mysqli, SandboxReplaceableData::class)) {
+			$this->sql = $mysqli;
 		} else {
 			throw new Action_Exception(
-				'Expected a string, file path or null for schema, received `' . get_class($schema) . '` instead.',
+				"Expected an instance of `mysqli` or an instance of `{SandboxReplaceableData::class}`, received `" . get_class($mysqli) . '` instead.',
 				Action_Exception::PARAMETER_MISMATCH
 			);
 		}
 
-		if ($mysqli instanceof \mysqli || ($mysqli instanceof SandboxReplaceableData && $mysqli->getClass() === 'mysqli')) {
-			$this->sql = $mysqli;
-			if ($mysqli instanceof SandboxReplaceableData && !empty($xpath)) {
-				$this->xpath = $xpath;
-			} else {
-				throw new Action_Exception(
-					'Expected an XPath string, but received no data',
-					Action_Exception::PARAMETER_MISMATCH
-				);
-			}
+		if (is_string($schema) || is_a($schema, SandboxReplaceableData::class)) {
+			$this->schema = $schema;
+		} elseif (empty($schema) && !is_a($mysqli, SandboxReplaceableData::class)) {
+			throw new Action_Exception(
+				'Empty schema value requires that `$mysqli` be an instance of `SandboxReplaceableData`',
+				Action_Exception::PARAMETER_MISMATCH
+			);
 		} else {
 			throw new Action_Exception(
-				'Expected an instance of `mysqli` or an instance of `SandboxReplaceableData` of type `mysqli`, received `' . get_class($mysqli) . '` instead.',
+				'Expected a string, file path, instance of `SandboxReplaceableData` or null for schema, received `' . get_class($schema) . '` instead.',
 				Action_Exception::PARAMETER_MISMATCH
 			);
 		}
+	}
+	
+	/**
+	 * Test for preloaded configuration (if necessary)
+	 *
+	 * @see ImportMySQLSchemaAction::__construct() __construct() describes valid configuration details.
+	 * 
+	 * @param array $environment {@inheritDoc}
+	 * @return void
+	 */
+	public function testSandbox(array &$environment) {
+		if ($this->sql instanceof mysqli) {
+			return true;
+		} elseif (is_a($this->sql, SandboxReplaceableData::class)) {
+			$connections = $this->sql->getData($environment);
+			foreach($connections as $connection) {
+				if (
+					empty($connection[self::HOST]) ||
+					empty($connection[self::USER]) ||
+					empty($connection[self::PASSWORD]) ||
+					empty($connection[self::DATABASE]) ||
+					(empty($this->schema) && empty($connection[self::SCHEMA]))
+				) {
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		return false;
 	}
 
 	/**
@@ -127,25 +137,23 @@ class ImportMySQLSchemaAction extends Action {
 		$sql = $this->sql;
 		$schema = $this->schema;
 		$messages = array();
-		if ($sql instanceof SandboxReplaceableData) {
-			$sql->setSandbox($environment);
-			$xpath = new DOMXPath($sql->getData());
-			foreach ($xpath->query($this->xpath) as $node) {
+		if (is_a($sql, SandboxReplaceableData::class)) {
+			$connections = $sql->getData($environment);
+			foreach ($connections as $connection) {
 				$sql = new mysqli(
-					$xpath->query(self::HOST, $node)->item(0)->textContent,
-					$xpath->query(self::USER, $node)->item(0)->textContent,
-					$xpath->query(self::PASSWORD, $node)->item(0)->textContent,
-					$xpath->query(self::DATABASE, $node)->item(0)->textContent
+					$connection[self::HOST],
+					$connection[self::USER],
+					$connection[self::PASSWORD],
+					$connection[self::DATABASE]
 				);
-				// TODO When it's safe to disregard PHP <5.3, this should become object-oriented -- http://php.net/manual/en/mysqli.construct.php#example-1881
-				if (mysqli_connect_error()) {
+				if ($sql->connect_error !== null) {
 					throw new Action_Exception(
-						'MySQL connection error ' . mysqli_connect_errno() . ': ' . mysqli_connect_error(),
+						'MySQL connection error ' . $sql->connect_errno . ': ' . $sql->connect_error,
 						Action_Exception::ACTION_FAILED 
 					);
 				}
 				if (empty($this->schema)) {
-					$schema = $xpath(self::SCHEMA, $node)->item(0)->textContent;
+					$schema = $connection[self::SCHEMA];
 				}
 				$messages[] = static::loadSchema($sql, $schema);
 			}
@@ -154,6 +162,7 @@ class ImportMySQLSchemaAction extends Action {
 		}
 		
 		return new Result(
+			get_class($this),
 			'SQL schema loaded',
 			implode("\n", $messages),
 			Result::SUCCESS
@@ -179,45 +188,15 @@ class ImportMySQLSchemaAction extends Action {
 		/* run queries one at a time */		
 		$queries = explode(';', $schema);
 		foreach ($queries as $query) {
-			if (!$sql->query($query)) {
-				throw new Action_Exception(
-					__METHOD__ . " MySQL error: " . $sql->error,
-					Action_Exception::ACTION_FAILED);
-			}
-		}
-		
-		return (realpath($schemaStringOrFilePath) ? "Schema file `$schemaStringOrFilePath`" : 'Schema') . ' loaded into ' . $sql->host_info();
-	}
-	
-	/**
-	 * Test for preloaded configuration (if necessary)
-	 *
-	 * @see ImportMySQLSchemaAction::__construct() __construct() describes valid configuration details.
-	 * 
-	 * @param array $environment {@inheritDoc}
-	 * @return void
-	 */
-	public function testSandbox(array &$environment) {
-		if ($this->sql instanceof \mysqli) {
-			return true;
-		} elseif ($this->sql instanceof SandboxReplaceableData) {
-			$sql = $this->sql;
-			$sql->setSandbox($environment);
-			$xpath = new DOMXPath($sql->getData());
-			foreach($xpath->query($this->xpath) as $node) {
-				if (
-					$xpath->query(self::HOST, $node)->length == 0 ||
-					$xpath->query(self::USER, $node)->length == 0 ||
-					$xpath->query(self::PASSWORD, $node)->length == 0 ||
-					$xpath->query(self::DATABASE, $node)->length == 0 ||
-					(empty($this->schema) && $xpath->query(self::SCHEMA, $node)->length == 0)
-				) {
-					return false;
+			if (!empty($query)) {
+				if ($sql->query($query) === false) {
+					throw new Action_Exception(
+						__METHOD__ . " MySQL error: " . $sql->error,
+						Action_Exception::ACTION_FAILED);
 				}
 			}
-			return true;
 		}
 		
-		return false;
+		return (realpath($schemaStringOrFilePath) ? "Schema file `$schemaStringOrFilePath`" : 'Schema') . ' loaded into ' . $sql->host_info;
 	}
 }

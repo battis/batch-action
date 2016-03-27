@@ -64,6 +64,7 @@ class ImportConfigXMLAction extends Action {
 		}
 		
 		return new Result(
+			get_class($this),
 			'Configuration loaded',
 			'A configuration has been loaded' . (realpath($this->xmlStringOrFilePath) ? " from the file `{$this->xmlStringOrFilePath}`" : '') . ' into the installer sandbox'
 		);

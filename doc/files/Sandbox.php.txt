@@ -54,11 +54,22 @@ class Sandbox {
 	/**
 	 * Add an action result to the sandbox
 	 * 
-	 * @param Result $result
+	 * @param Result|Result[] $result
 	 * @return void
 	 */
-	public function addResult(Result $result) {
-		$this->results[] = $result;
+	public function addResult($result) {
+		if (is_array($result)) {
+			foreach($result as $r) {
+				$this->addResult($r);
+			}
+		} elseif (is_a($result, Result::class)) {
+			$this->results[] = $result;
+		} else {
+			throw new Sandbox_Exception(
+				'Expected an instance of `' . Result::class . '` (or an array of such instances), received `' . get_class($result) . '` instead.',
+				Sandbox_Exception::PARAMETER_MISMATCH
+			);
+		}
 	}
 	
 	/**

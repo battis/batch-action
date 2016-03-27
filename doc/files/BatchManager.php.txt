@@ -26,7 +26,7 @@ class BatchManager {
 				foreach ($action as $a) {
 					$this->add($a);
 				}
-			} elseif ($action instanceof Action) {
+			} elseif (is_a($action, Action::class)) {
 				$this->sequence[] = $action;
 			}
 		}
@@ -56,8 +56,7 @@ class BatchManager {
 			if ($filter === null || $filter->filter($action)) {
 				try {
 					$result = $this->preprocessAction($action)->run($environment, $id, $force);
-					$result->setClass(get_class($action));
-					$sandbox->addResult($this->postprocessResult($result));
+					$sandbox->addResult($this->postprocessResults($result));
 				} catch (Action_Exception $e) {
 					throw new BatchManager_Exception(
 						($force ? 'Forced run' : 'Run') . " (ID $id)" . (empty($tags) ? '' : ' with tags [' . implode(', ', $tags) . ']') . ' failed to complete: ' . $e->getMessage() . ' (Action_Exception ' . $e->getCode() . '), sandbox contents: ' . var_export($sandbox, true),
@@ -90,10 +89,10 @@ class BatchManager {
 	 * postprocessing of each action's result before it is stored in the sandbox
 	 * result sequence.
 	 *
-	 * @param Result $result
-	 * @return void
+	 * @param Result|Result[] $result
+	 * @return Result|Result[]
 	 */
-	protected function postprocessResult(Result $result) {
+	protected function postprocessResults($result) {
 		return $result;
 	}
 }

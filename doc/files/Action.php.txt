@@ -43,11 +43,11 @@ abstract class Action {
 		/* save any prerequisite Actions */
 		if (is_array($prerequisites)) {
 			foreach ($prerequisites as $key => $action) {
-				if ($action instanceof Action) {
+				if (is_a($action, Action::class)) {
 					$this->prerequisites[$key] = $action;
 				}
 			}
-		} elseif ($prerequisites instanceof Action) {
+		} elseif (is_a($prerequisites, Action::class)) {
 			$this->prerequisites[] = $prerequisites;
 		}
 		
@@ -238,12 +238,16 @@ abstract class Action {
 	 *		been run in the past. (If it has been run previously in this run, it will
 	 *		not be run again). (default: `false`)
 	 *
-	 * @return void
+	 * @return Result|Result[]
 	 */
 	private function testPrerequisites(array &$environment, $id, $force = false) {
-		foreach($this->prerequisites as $prerequisites) {
-			$prerequisites->run($environment, $id, $force);
+		$results = array();
+		foreach($this->prerequisites as $prerequisite) {
+			if ($force || !$prerequisite->hasActed($id)) {
+				$results[] = $prerequisite->run($environment, $id, $force);
+			}
 		}
+		return $results;
 	}
 
 	/**
@@ -283,13 +287,15 @@ abstract class Action {
 		} else {
 			if (!$this->isActing()) {
 				$this->acting = true;
+				$results = array();
 				$result = new Result(
+					get_class($this),
 					get_class($this) . ' incomplete',
 					'This action has not run to completion.',
 					Result::DANGER
 				);
 				try {
-					$this->testPrerequisites($environment, $id, $force);
+					$results = $this->testPrerequisites($environment, $id, $force);
 					if (!$this->testSandbox($environment)) {
 						throw new Action_Exception(
 							get_class($this) . 'requires a prerequisite configuration of the sandbox execution environment that failed',
@@ -303,7 +309,7 @@ abstract class Action {
 					);
 				}
 				$result = $this->act($environment);
-				if ($result instanceof Result) {
+				if (is_a($result, Result::class)) {
 					$this->acting = false;
 					$this->acted = true;
 					$this->history[] = $id;
@@ -319,7 +325,8 @@ abstract class Action {
 					Action_Exception::CIRCULAR_DEPENDENCY
 				);
 			}
-			return $result;
+			$results[] = $result;
+			return $results;
 		}
 	}
 	
