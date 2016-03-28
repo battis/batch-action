@@ -34,7 +34,20 @@ class ImportConfigXMLAction extends Action {
 	 */
 	public function __construct($xmlStringOrFilePath, $prerequisites = array(), $tags = array()) {
 		parent::__construct($prerequisites, $tags);
-		$this->xmlStringOrFilePath = $xmlStringOrFilePath;
+		$this->setXMLStringOrFilePath($xmlStringOrFilePath);
+	}
+	
+	/**
+	 * Overrideable method to process `$xmlStringOrFilePath` parameter of `__construct()`
+	 * 
+	 * @param string $xmlStringOrFilePath Either a literal XML configuration string
+	 *		or the path to an XML file
+	 *
+	 * @return string
+	 */
+	protected function setXMLStringOrFilePath($xmlStringOrFilePath) {
+		$this->xmlStringOrFilePath = (string) $xmlStringOrFilePath;
+		return $this->xmlStringOrFilePath;
 	}
 	
 	/**
@@ -60,7 +73,7 @@ class ImportConfigXMLAction extends Action {
 		if (realpath($this->xmlStringOrFilePath)) {
 			$environment[self::CONFIG][basename($this->xmlStringOrFilePath)] = $dom;
 		} else {
-			$environment[self::CONFIG][] = $dom;
+			$environment[self::CONFIG][$dom->documentElement->tagName] = $dom;
 		}
 		
 		return new Result(

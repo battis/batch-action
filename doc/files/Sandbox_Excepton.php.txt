@@ -2,6 +2,8 @@
 	
 namespace Battis\BatchAction\Sandbox;
 
+use Battis\BatchAction\BatchManager_Exception;
+
 /**
  * All exceptions thrown by Sandbox
  * 

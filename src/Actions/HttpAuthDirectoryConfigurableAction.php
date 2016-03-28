@@ -1,0 +1,82 @@
+<?php
+	
+namespace Battis\BatchAction\Actions;
+
+use Battis\BatchAction\BatchAction;
+use Battis\BatchAction\Sandbox\SandboxReplaceableData;
+
+/**
+ * {@inheritDoc} Extended to allow for configuration based on previously-loaded
+ * configuration information in the BatchManager execution environment sandbox.
+ * 
+ * @author Seth Battis <seth@battis.net>
+ */
+class HttpAuthDirectoryConfigurableAction extends HttpAuthDirectoryAction {
+
+	const DIRPATH = 'dirpath';
+	const USERS = 'users';
+	const USERNAME = 'username';
+	const PASSWORD = 'password';
+	const HTPASSWD = 'htpasswd';
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * {@inheritDoc}
+	 * 
+	 * @param string|SandboxReplaceableData $dirPath {@inheritDoc}
+	 *
+	 * @return string|SandboxReplaceableData {@inheritDoc}
+	 */
+	protected function setDirPath($dirPath) {
+		if (is_a($dirPath, SandboxReplaceableData::class)) {
+			$this->dirPath = $dirPath;
+		} else {
+			return parent::setDirPath($dirPath);
+		}
+		
+		return $this->dirPath;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * {@inheritDoc}
+	 * 
+	 * @param string|string[] $users {@inheritDoc}
+	 *
+	 * @return string[] {@inheritDoc}
+	 */
+	protected function setUsers($users) {
+		if ($users === null && is_a($this->dirPath, SandboxReplaceableData::class)) {
+			$this->users = null;
+		} else {
+			return parent::setUsers($users);
+		}
+		
+		return $this->users;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * {@inheritDoc}
+	 * 
+	 * @param array $environment {@inheritDoc}
+	 *
+	 * @return Result|Result[] {@inhertDoc}
+	 */
+	public function act(array &$environment) {
+		if (is_a($this->dirPath, SandboxReplaceableData::class)) {
+			$results = array();
+			// FIXME Seems to assume that the SRD is a CxmlRD... how to reconcile?
+			foreach ($this->dirPath->getData($environment) as $dirPath) {
+				// TODO deal with more exotic configuration possibilities than just the dirpath
+				$results[] = $this->httpAuthDirectory($dirPath, $this->users, $this->htpasswdFilePath);
+			}
+			return $results;
+		} else {
+			return parent::act($environment);
+		}
+	}
+}

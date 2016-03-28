@@ -309,7 +309,7 @@ abstract class Action {
 					);
 				}
 				$result = $this->act($environment);
-				if (is_a($result, Result::class)) {
+				if (Result::completed($result)) {
 					$this->acting = false;
 					$this->acted = true;
 					$this->history[] = $id;
@@ -333,12 +333,13 @@ abstract class Action {
 	/**
 	 * What this Action does
 	 *
-	 * Overrideable method for extensions of Action to implement
+	 * Overrideable method for extensions of Action to implement.
 	 * 
 	 * @param array $environment The BatchManager execution environment of shared
 	 *		variables between actions
 	 *
-	 * @return Result
+	 * @return Result An encapsulated summary (including human-readable feedback)
+	 *		of the action.
 	 */
 	abstract public function act(array &$environment);
 }

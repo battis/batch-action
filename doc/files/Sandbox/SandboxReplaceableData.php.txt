@@ -43,6 +43,15 @@ class SandboxReplaceableData {
 	}
 	
 	/**
+	 * Get the sandbox path
+	 * 
+	 * @return string
+	 */
+	public function getPath() {
+		return self::PATH_DELIMITER . implode(self::PATH_DELIMITER, $this->path);
+	}
+	
+	/**
 	 * Get the data
 	 *
 	 * If the sandbox contains the desired data, that will be returned. However if

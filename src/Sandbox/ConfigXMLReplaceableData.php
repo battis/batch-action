@@ -7,6 +7,13 @@ use DOMDocument;
 use DOMXPath;
 use DOMNode;
 
+/**
+ * {@inheritDoc} Extended to treat the data stored in the Sandbox as a
+ * `DOMDocument`, and to extract further data from that DOM via XPath, converting
+ * the DOM into an associative array.
+ * 
+ * @author Seth Battis <seth@battis.net>
+ */
 class ConfigXMLReplaceableData extends SandboxReplaceableData {
 	
 	/** @var string XPath query string */
@@ -76,8 +83,9 @@ class ConfigXMLReplaceableData extends SandboxReplaceableData {
 	 * object (unless no data is found, in which case the placeholder data will be
 	 * returned).
 	 * 
-	 * @access public
-	 * @return mixed|\DOMNodeList
+	 * @param array $environment {@inheritDoc}
+	 *
+	 * @return mixed {@inheritDoc}
 	 */
 	public function getData(array &$environment = null) {
 		$dom = parent::getData($environment);

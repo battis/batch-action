@@ -5,8 +5,10 @@ require_once str_replace('/vendor/battis/batch-action', '', __DIR__) . '/../../v
 
 use Battis\BatchAction\BatchManager;
 use Battis\BatchAction\Sandbox\ConfigXMLReplaceableData;
+use Battis\BatchAction\Sandbox\SandboxReplaceableData;
+use Battis\BatchAction\Actions\ExportArrayAction;
 use Battis\BatchAction\Actions\ImportConfigXMLAction;
-use Battis\BatchAction\Actions\ImportMySQLSchemaAction;
+use Battis\BatchAction\Actions\ImportMySQLSchemaConfigurableAction;
 use Battis\BatchAction\Actions\HttpAuthDirectoryAction;
 
 try {
@@ -14,7 +16,14 @@ try {
 	$config = new ImportConfigXMLAction(
 		__DIR__ . '/secrets.xml'
 	);
-	$sql = new ImportMySQLSchemaAction(
+	$export = new ExportArrayAction(
+		new ConfigXMLReplaceableData(
+			'/config/secrets.xml',
+			'/'
+		),
+		$config
+	);
+	$sql = new ImportMySQLSchemaConfigurableAction(
 		new ConfigXMLReplaceableData(
 			'/config/secrets.xml',
 			'/secrets/mysql'
@@ -25,6 +34,7 @@ try {
 	$auth = new HttpAuthDirectoryAction(__DIR__, 'seth');
 	$installer->addAction($sql);
 	$installer->addAction($auth);
+	$installer->addAction($export);
 	$run = $installer->run();
 	echo '<pre>';
 	var_dump($run);
