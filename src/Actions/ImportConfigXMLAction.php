@@ -54,7 +54,8 @@ class ImportConfigXMLAction extends Action {
 	 * Import the configuration XML
 	 * 
 	 * The configuration is stored as a `DOMDocument` in the BatchManager execution
-	 * environment: `$environment[ImportConfigXMLAction::CONFIG]`
+	 * environment: `$environment[ImportConfigXMLAction::CONFIG]` and the path to
+	 * the configuration is returned as the data element of the `Result`.
 	 *
 	 * @param array $environment {@inheritDoc}
 	 *
@@ -70,16 +71,21 @@ class ImportConfigXMLAction extends Action {
 		// FIXME make sure we've got some content in $xml!
 		
 		$dom = DOMDocument::loadXML($xml);
+		$path = '';
 		if (realpath($this->xmlStringOrFilePath)) {
-			$environment[self::CONFIG][basename($this->xmlStringOrFilePath)] = $dom;
+			$path = basename($this->xmlStringOrFilePath);
 		} else {
-			$environment[self::CONFIG][$dom->documentElement->tagName] = $dom;
+			$path = $dom->documentElement->tagName;
 		}
+		$environment[self::CONFIG][$path] = $dom;
 		
 		return new Result(
 			get_class($this),
 			'Configuration loaded',
-			'A configuration has been loaded' . (realpath($this->xmlStringOrFilePath) ? " from the file `{$this->xmlStringOrFilePath}`" : '') . ' into the installer sandbox'
+			'A configuration has been loaded' . (realpath($this->xmlStringOrFilePath) ? " from the file `{$this->xmlStringOrFilePath}`" : '') . ' into the installer sandbox',
+			Result::SUCCESS,
+			true,
+			'/' . self::CONFIG . "/$path"
 		);
 	}
 }
